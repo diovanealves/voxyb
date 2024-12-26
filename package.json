@@ -15,18 +15,14 @@
     "@react-three/fiber": "^8.17.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "dotted-map": "^2.2.3",
     "framer-motion": "^11.14.4",
     "lucide-react": "^0.468.0",
-    "mini-svg-data-uri": "^1.4.4",
     "motion": "^11.14.4",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
-    "three": "^0.171.0",
-    "three-globe": "^2.36.1"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
