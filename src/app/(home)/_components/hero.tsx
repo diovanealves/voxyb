@@ -34,7 +34,7 @@ export function Hero() {
         transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
       >
         <Button asChild className="mt-6 font-medium" size="lg">
-          <Link href={"#"}>
+          <Link href="/login">
             Try It Now <ArrowRightIcon className="h-6 w-6" />
           </Link>
         </Button>

@@ -9,8 +9,7 @@ import { useState } from "react";
 
 const navItems = [
   { name: "Benefits", href: "#benefits" },
-  { name: "Use Cases", href: "#use-cases" },
-  { name: "Features", href: "#features" },
+  { name: "Available Languages", href: "#supported-languages" },
   { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
 ];
@@ -41,7 +40,7 @@ export function Navbar() {
 
         <div className="hidden md:block">
           <Button asChild>
-            <Link href={"#"}>Login</Link>
+            <Link href="/login">Login</Link>
           </Button>
         </div>
 

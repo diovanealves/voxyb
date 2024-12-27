@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 
 export function CTA() {
   return (
@@ -31,12 +32,14 @@ export function CTA() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <Button
-          className="rounded-lg px-8 py-5 text-lg font-semibold transition-all hover:scale-105"
-          variant="outline"
-        >
-          Get Started Now
-          <ArrowRightIcon className="group-hover:translate-x-1: ml-2 h-5 w-5 transition-transform" />
+        <Button variant="outline" className="px-8 py-5">
+          <Link
+            href="/login"
+            className="flex items-center rounded-lg text-lg font-semibold transition-all hover:scale-105"
+          >
+            Get Started Now
+            <ArrowRightIcon className="group-hover:translate-x-1: ml-2 h-5 w-5 transition-transform" />
+          </Link>
         </Button>
       </motion.div>
     </section>

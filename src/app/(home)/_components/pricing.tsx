@@ -64,7 +64,7 @@ export function Pricing() {
               className="mt-3 w-full rounded-lg dark:text-white"
               variant="outline"
             >
-              <Link href={"#"}>Get Started Now</Link>
+              <Link href="/login">Get Started Now</Link>
             </Button>
           </CardContent>
         </Card>
