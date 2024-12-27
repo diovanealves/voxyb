@@ -12,7 +12,7 @@ export function CTA() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-2xl font-bold md:text-4xl"
+        className="text-2xl font-bold text-white md:text-4xl"
       >
         Ready to Transform Your Text into Lifelike Audio?
       </motion.h2>
@@ -21,7 +21,7 @@ export function CTA() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-4 mt-2 text-base md:text-lg"
+        className="mb-4 mt-2 text-base text-white md:text-lg"
       >
         Join thousands of satisfied users and experience the future of
         text-to-speech technology today!
