@@ -1,6 +1,7 @@
 "use client";
 
 import { Logo } from "@/components/logo";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { MenuIcon, XIcon } from "lucide-react";
@@ -9,7 +10,7 @@ import { useState } from "react";
 
 const navItems = [
   { name: "Benefits", href: "#benefits" },
-  { name: "Available Languages", href: "#supported-languages" },
+  { name: "Use Cases", href: "#use-cases" },
   { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
 ];
@@ -31,24 +32,26 @@ export function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="transition-colors hover:text-blue-600"
+              className="transition-colors hover:text-primary"
             >
               {item.name}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center space-x-4 md:flex">
+          <ModeToggle />
           <Button asChild>
             <Link href="/login">Login</Link>
           </Button>
         </div>
 
-        <div className="md:hidden">
+        <div className="flex items-center space-x-4 md:hidden">
+          <ModeToggle />
           <Button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            variant="link"
-            className="p-0"
+            variant="ghost"
+            size="icon"
             aria-label="Toggle Menu"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
@@ -81,15 +84,15 @@ export function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="block py-2 text-gray-600 transition-colors hover:text-foreground"
+                className="block py-2 text-muted-foreground transition-colors hover:text-foreground"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
 
-            <Button asChild className="w-full">
-              <Link href={"#"}>Login</Link>
+            <Button asChild className="mt-4 w-full">
+              <Link href="/login">Login</Link>
             </Button>
           </div>
         </motion.div>
