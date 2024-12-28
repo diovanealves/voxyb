@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,6 +9,11 @@ export const metadata: Metadata = {
     "Transform your texts into high-quality audio, ready for advertising campaigns and marketing content. Simple, fast, and with professional voices that capture the audience's attention.",
 };
 
+const interFont = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={interFont.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
