@@ -47,7 +47,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                   </Link>
                 </SidebarMenuButton>
                 <SidebarMenuButton asChild>
-                  <Link href="/dashboard">
+                  <Link href="/dashboard/audios">
                     <HeadphonesIcon className="mr-2 h-4 w-4" />
                     <span> Generated Audios</span>
                   </Link>
