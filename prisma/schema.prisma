@@ -45,6 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Audio         Audio[]
 
   @@map("users")
 }
@@ -56,4 +57,15 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Audio {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
