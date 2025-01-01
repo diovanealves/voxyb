@@ -70,7 +70,7 @@ export function Benefits() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.15 }}
           >
-            <Card className="rounded-xl shadow-lg transition-all hover:shadow-xl">
+            <Card className="h-72 rounded-xl shadow-lg transition-all hover:shadow-xl">
               <CardHeader>
                 <CardTitle className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-900 to-purple-900 text-white">
                   {benefit.icon}
