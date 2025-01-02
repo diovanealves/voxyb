@@ -1,8 +1,10 @@
+import { PropsWithChildren } from "react";
+
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
-import { auth } from "@/services/auth";
-import { PropsWithChildren } from "react";
 import { MainSidebar } from "./_components/main-sidebar";
+
+import { auth } from "@/services/auth";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth();

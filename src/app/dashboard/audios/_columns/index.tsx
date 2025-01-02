@@ -8,7 +8,6 @@ export const audiosColumns: ColumnDef<Audio>[] = [
   {
     accessorKey: "title",
     header: "Title",
-    size: 600,
   },
   {
     accessorKey: "date",
