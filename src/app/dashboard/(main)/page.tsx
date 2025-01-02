@@ -1,19 +1,11 @@
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { CreateAudioForm } from "../_components/create-audio-form";
+import { AudioCard } from "../_components/audio-card";
+import { TipsCard } from "../_components/tips-card";
 
 export default function Page() {
   return (
-    <div className="flex h-full items-center justify-center">
-      <Card className="w-11/12 pt-6">
-        <CardTitle className="mb-2 text-center text-xl font-bold">
-          Create Your Audio
-        </CardTitle>
-        <CardContent>
-          <CreateAudioForm />
-
-          
-        </CardContent>
-      </Card>
+    <div className="mt-10 flex h-full flex-col items-center justify-center md:mt-0">
+      <AudioCard />
+      <TipsCard />
     </div>
   );
 }

@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createAudioSchema } from "../(main)/schema";
 
-export function CreateAudioForm() {
+export function AudioForm() {
   const form = useForm<z.infer<typeof createAudioSchema>>({
     resolver: zodResolver(createAudioSchema),
     defaultValues: {
