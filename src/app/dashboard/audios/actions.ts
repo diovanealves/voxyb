@@ -5,18 +5,18 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-import { auth } from "@/services/auth";
 import { prisma } from "@/services/database";
+import { ensureUserAuthenticated } from "../(main)/actions";
 
 import { cloudflareR2 } from "@/lib/cloudflare";
 import { audioActionSchema } from "./schema";
 
 export async function getUserAudio() {
-  const session = await auth();
+  const session = await ensureUserAuthenticated();
 
   const audios = await prisma.audio.findMany({
     where: {
-      userId: session?.user?.id,
+      userId: session.id,
     },
     orderBy: {
       createdAt: "desc",
@@ -26,22 +26,29 @@ export async function getUserAudio() {
   return audios;
 }
 
-export async function getAudioDownloadUrl(
-  input: z.infer<typeof audioActionSchema>,
-) {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    throw new Error("You are not signed in. Please log in and try again.");
-  }
-
+export async function getAudioById(input: z.infer<typeof audioActionSchema>) {
   const audio = await prisma.audio.findUnique({
     where: { id: input.id },
+    select: {
+      id: true,
+      title: true,
+      url: true,
+    },
   });
 
   if (!audio) {
-    throw new Error("Audio not found");
+    throw new Error("The audio you are looking for doesn't exist.");
   }
+
+  return audio;
+}
+
+export async function getAudioDownloadUrl(
+  input: z.infer<typeof audioActionSchema>,
+) {
+  await ensureUserAuthenticated();
+
+  const audio = await getAudioById({ id: input.id });
 
   const getAudioCommand = new GetObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
@@ -60,33 +67,9 @@ export async function getAudioDownloadUrl(
 }
 
 export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
-  const session = await auth();
+  const session = await ensureUserAuthenticated();
 
-  if (!session?.user?.id) {
-    return {
-      error: "You are not signed in. Please log in and try again.",
-      action: true,
-      data: null,
-    };
-  }
-
-  const audio = await prisma.audio.findUnique({
-    where: {
-      id: input.id,
-      userId: session.user.id,
-    },
-    select: {
-      id: true,
-      url: true,
-    },
-  });
-
-  if (!audio) {
-    return {
-      error: "The audio you are looking for doesn't exist.",
-      data: null,
-    };
-  }
+  const audio = await getAudioById({ id: input.id });
 
   const commandDelete = new DeleteObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
@@ -97,14 +80,13 @@ export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
   await prisma.audio.delete({
     where: {
       id: input.id,
-      userId: session.user.id,
+      userId: session.id,
     },
   });
 
   revalidatePath("/dashboard/audios");
 
   return {
-    error: null,
     data: "Audio deleted",
   };
 }

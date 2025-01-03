@@ -11,12 +11,18 @@ import { elevenLabsClient } from "@/lib/elevenlabs";
 
 import { createAudioSchema } from "./schema";
 
-export async function createAudio(data: z.infer<typeof createAudioSchema>) {
+export async function ensureUserAuthenticated() {
   const session = await auth();
 
-  if (!session?.user?.id) {
-    throw new Error("User not authorized");
+  if (!session?.user) {
+    throw new Error("You are not signed in. Please log in and try again.");
   }
+
+  return session.user;
+}
+
+export async function createAudio(data: z.infer<typeof createAudioSchema>) {
+  const session = await ensureUserAuthenticated();
 
   const audioStream = await elevenLabsClient.generate({
     voice: data["voice-id"],
@@ -32,7 +38,7 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
   }
   const buffer = Buffer.concat(chunks);
 
-  const fileName = `${session?.user?.id}-${crypto.randomUUID()}`;
+  const fileName = `${session.id}-${crypto.randomUUID()}`;
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
@@ -47,7 +53,7 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
     data: {
       title: data.title,
       url: fileName,
-      userId: session.user.id,
+      userId: session.id!,
     },
   });
 

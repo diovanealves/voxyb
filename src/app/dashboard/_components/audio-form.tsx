@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -23,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ToastAction } from "@/components/ui/toast";
 
 import { toast } from "@/hooks/use-toast";
 import { createAudio } from "../(main)/actions";
@@ -53,14 +55,37 @@ export function AudioForm() {
   }
 
   async function onSubmit(data: z.infer<typeof createAudioSchema>) {
-    await createAudio(data);
+    try {
+      await createAudio(data);
+      toast({
+        variant: "success",
+        description: "Audio generated successfully",
+      });
 
-    toast({
-      variant: "success",
-      description: "Audio generated successfully",
-    });
-
-    form.reset();
+      form.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (
+          error.message ===
+          "You are not signed in. Please log in and try again."
+        ) {
+          toast({
+            variant: "destructive",
+            description: error.message,
+            action: (
+              <ToastAction altText="Click here" asChild>
+                <Link href="/login">Click here</Link>
+              </ToastAction>
+            ),
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description: error.message,
+          });
+        }
+      }
+    }
   }
 
   return (

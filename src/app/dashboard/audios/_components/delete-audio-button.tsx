@@ -11,23 +11,34 @@ import { audioActionSchema } from "../schema";
 
 export function DeleteAudioButton({ id }: z.infer<typeof audioActionSchema>) {
   async function handleDelete() {
-    const audioDeleted = await deleteAudio({ id });
-
-    if (audioDeleted?.error) {
+    try {
+      await deleteAudio({ id });
       toast({
-        description: audioDeleted?.error,
-        action: audioDeleted?.action ? (
-          <ToastAction altText="Click here" asChild>
-            <Link href="/login">Click here</Link>
-          </ToastAction>
-        ) : undefined,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        description: "The audio was successfully deleted",
         variant: "success",
+        description: "The audio was successfully deleted",
       });
+    } catch (error) {
+      if (error instanceof Error) {
+        if (
+          error.message ===
+          "You are not signed in. Please log in and try again."
+        ) {
+          toast({
+            variant: "destructive",
+            description: error.message,
+            action: (
+              <ToastAction altText="Click here" asChild>
+                <Link href="/login">Click here</Link>
+              </ToastAction>
+            ),
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description: error.message,
+          });
+        }
+      }
     }
   }
 

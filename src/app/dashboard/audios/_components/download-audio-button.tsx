@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/hooks/use-toast";
 import { DownloadIcon } from "lucide-react";
+import Link from "next/link";
 import { z } from "zod";
 import { getAudioDownloadUrl } from "../actions";
 import { audioActionSchema } from "../schema";
@@ -28,10 +30,25 @@ export function DownloadAudioButton({ id }: z.infer<typeof audioActionSchema>) {
       URL.revokeObjectURL(bloblUrl);
     } catch (error) {
       if (error instanceof Error) {
-        toast({
-          variant: "destructive",
-          description: error.message,
-        });
+        if (
+          error.message ===
+          "You are not signed in. Please log in and try again."
+        ) {
+          toast({
+            variant: "destructive",
+            description: error.message,
+            action: (
+              <ToastAction altText="Click here" asChild>
+                <Link href="/login">Click here</Link>
+              </ToastAction>
+            ),
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description: error.message,
+          });
+        }
       }
     }
   }
