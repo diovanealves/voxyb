@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { loadStripe } from "@stripe/stripe-js";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,11 +24,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ToastAction } from "@/components/ui/toast";
 
+import { createCheckout } from "@/app/actions/checkout";
 import { toast } from "@/hooks/use-toast";
-import { createAudio } from "../(main)/actions";
-
 import { cn } from "@/lib/utils";
 import { createAudioSchema } from "../(main)/schema";
 
@@ -56,35 +54,24 @@ export function AudioForm() {
 
   async function onSubmit(data: z.infer<typeof createAudioSchema>) {
     try {
-      await createAudio(data);
-      toast({
-        variant: "success",
-        description: "Audio generated successfully",
-      });
+      const checkout = await createCheckout(data);
+
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
+      );
 
       form.reset();
+      stripe?.redirectToCheckout({
+        sessionId: checkout.id,
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        if (
-          error.message ===
-          "You are not signed in. Please log in and try again."
-        ) {
-          toast({
-            variant: "destructive",
-            description: error.message,
-            action: (
-              <ToastAction altText="Click here" asChild>
-                <Link href="/login">Click here</Link>
-              </ToastAction>
-            ),
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            description: error.message,
-          });
-        }
-      }
+      console.error(error);
+
+      toast({
+        variant: "destructive",
+        description:
+          "There was an issue with processing your payment. Please try again. If the problem persists, contact support.",
+      });
     }
   }
 

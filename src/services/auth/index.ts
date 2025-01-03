@@ -15,12 +15,12 @@ export const {
     verifyRequest: "/login",
     newUser: "/dashboard",
   },
-  secret: process.env.SECRET_AUTH,
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
 });
