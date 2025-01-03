@@ -1,6 +1,7 @@
 "use server";
 
 import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { auth } from "@/services/auth";
@@ -35,7 +36,7 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
   const fileName = `${session?.user?.id}-${crypto.randomUUID()}`;
 
   const putObjectCommand = new PutObjectCommand({
-    Bucket: "voicelyb-audio",
+    Bucket: process.env.CLOUDFLARE_BUCKET,
     Key: fileName,
     Body: buffer,
     ContentType: "audio/mpeg",
@@ -50,6 +51,8 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
       userId: session.user.id,
     },
   });
+
+  revalidatePath("/dashboard/audios");
 
   return { data: "Audio generated successfully" };
 }
