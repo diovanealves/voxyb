@@ -46,7 +46,7 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
   await prisma.audio.create({
     data: {
       title: data.title,
-      url: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/voicelyb-audio/${fileName}`,
+      url: fileName,
       userId: session.user.id,
     },
   });
