@@ -1,5 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,10 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+import { toast } from "@/hooks/use-toast";
+import { createAudio } from "../(main)/actions";
+
 import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { createAudioSchema } from "../(main)/schema";
 
 export function AudioForm() {
@@ -47,8 +52,14 @@ export function AudioForm() {
     }
   }
 
-  function onSubmit(data: z.infer<typeof createAudioSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof createAudioSchema>) {
+    await createAudio(data);
+
+    toast({
+      variant: "success",
+      description: "Audio generated successfully",
+    });
+
     form.reset();
   }
 
@@ -108,7 +119,11 @@ export function AudioForm() {
           render={({ field }) => (
             <FormItem className="mt-3 space-y-1">
               <FormLabel>Select voice</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl aria-label="Select a voice">
                   <SelectTrigger>
                     <SelectValue placeholder="Select a voice" />
