@@ -1,7 +1,6 @@
 "use server";
 
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { auth } from "@/services/auth";
@@ -23,7 +22,7 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
     voice: data["voice-id"],
     output_format: "mp3_44100_128",
     text: data.text,
-    model_id: "eleven_flash_v2",
+    model_id: "eleven_flash_v2_5",
   });
 
   const chunks: Buffer[] = [];
@@ -51,8 +50,6 @@ export async function createAudio(data: z.infer<typeof createAudioSchema>) {
       userId: session.user.id,
     },
   });
-
-  revalidatePath("/dashboard/audios");
 
   return { data: "Audio generated successfully" };
 }
