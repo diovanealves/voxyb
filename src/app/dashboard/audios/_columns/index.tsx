@@ -12,7 +12,6 @@ export const audiosColumns: ColumnDef<Audio>[] = [
   {
     accessorKey: "date",
     header: "Date",
-    size: 150,
     cell: ({ row: { original: audio } }) => {
       return new Date(audio.createdAt).toLocaleDateString("en-US", {
         day: "2-digit",
@@ -24,7 +23,6 @@ export const audiosColumns: ColumnDef<Audio>[] = [
   {
     accessorKey: "actions",
     header: "Actions",
-    size: 100,
     cell: ({ row: { original: audio } }) => {
       return (
         <div className="space-x-1">

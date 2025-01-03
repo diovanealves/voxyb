@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-export const deleteAudioSchema = z.object({
+export const audioActionSchema = z.object({
   id: z.string({ required_error: "ID is required" }),
 });

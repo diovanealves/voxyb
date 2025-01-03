@@ -7,9 +7,9 @@ import { TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { deleteAudio } from "../actions";
-import { deleteAudioSchema } from "../schema";
+import { audioActionSchema } from "../schema";
 
-export function DeleteAudioButton({ id }: z.infer<typeof deleteAudioSchema>) {
+export function DeleteAudioButton({ id }: z.infer<typeof audioActionSchema>) {
   async function handleDelete() {
     const audioDeleted = await deleteAudio({ id });
 
