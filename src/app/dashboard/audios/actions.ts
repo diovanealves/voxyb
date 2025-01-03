@@ -1,6 +1,7 @@
 "use server";
 
-import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -8,7 +9,7 @@ import { auth } from "@/services/auth";
 import { prisma } from "@/services/database";
 
 import { cloudflareR2 } from "@/lib/cloudflare";
-import { deleteAudioSchema } from "./schema";
+import { audioActionSchema } from "./schema";
 
 export async function getUserAudio() {
   const session = await auth();
@@ -25,7 +26,40 @@ export async function getUserAudio() {
   return audios;
 }
 
-export async function deleteAudio(input: z.infer<typeof deleteAudioSchema>) {
+export async function getAudioDownloadUrl(
+  input: z.infer<typeof audioActionSchema>,
+) {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("You are not signed in. Please log in and try again.");
+  }
+
+  const audio = await prisma.audio.findUnique({
+    where: { id: input.id },
+  });
+
+  if (!audio) {
+    throw new Error("Audio not found");
+  }
+
+  const getAudioCommand = new GetObjectCommand({
+    Bucket: process.env.CLOUDFLARE_BUCKET,
+    Key: audio.url,
+  });
+
+  const signedUrl = await getSignedUrl(cloudflareR2, getAudioCommand, {
+    expiresIn: 3600,
+  });
+
+  if (!signedUrl) {
+    throw new Error("Failed to generate download link");
+  }
+
+  return { title: audio.title, url: signedUrl };
+}
+
+export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -54,10 +88,9 @@ export async function deleteAudio(input: z.infer<typeof deleteAudioSchema>) {
     };
   }
 
-  const fileName = audio.url.split("/").slice(-1)[0];
   const commandDelete = new DeleteObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
-    Key: fileName,
+    Key: audio.url,
   });
   await cloudflareR2.send(commandDelete);
 

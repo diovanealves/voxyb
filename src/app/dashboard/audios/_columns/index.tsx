@@ -3,6 +3,7 @@
 import { Audio } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { DeleteAudioButton } from "../_components/delete-audio-button";
+import { DownloadAudioButton } from "../_components/download-audio-button";
 
 export const audiosColumns: ColumnDef<Audio>[] = [
   {
@@ -26,6 +27,8 @@ export const audiosColumns: ColumnDef<Audio>[] = [
     cell: ({ row: { original: audio } }) => {
       return (
         <div className="space-x-1">
+          <DownloadAudioButton id={audio.id} />
+
           <DeleteAudioButton id={audio.id} />
         </div>
       );
