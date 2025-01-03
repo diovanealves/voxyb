@@ -35,16 +35,13 @@ export function DataTable<TData, TValue>({
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow
+              key={headerGroup.id}
+              className="mt-3 grid grid-cols-3 place-content-center place-items-center md:grid-cols-[70%,10%,30%]"
+            >
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead
-                    key={header.id}
-                    style={{
-                      minWidth: header.column.columnDef.size,
-                      maxWidth: header.column.columnDef.size,
-                    }}
-                  >
+                  <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -63,6 +60,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="grid grid-cols-3 place-content-center place-items-center md:grid-cols-[70%,10%,30%]"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
