@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-import { createCheckout } from "@/app/actions/checkout";
+import { createCheckout } from "@/app/actions/create-checkout";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { createAudioSchema } from "../(main)/schema";
@@ -61,7 +61,7 @@ export function AudioForm() {
       );
 
       form.reset();
-      stripe?.redirectToCheckout({
+      await stripe?.redirectToCheckout({
         sessionId: checkout.id,
       });
     } catch (error) {

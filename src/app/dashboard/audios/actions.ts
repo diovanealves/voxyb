@@ -6,13 +6,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { prisma } from "@/services/database";
-import { ensureUserAuthenticated } from "../(main)/actions";
 
+import { ensureUserAuthenticated } from "@/app/actions/ensure-user-authenticated";
 import { cloudflareR2 } from "@/lib/cloudflare";
 import { audioActionSchema } from "./schema";
 
 export async function getUserAudio() {
-  const session = await ensureUserAuthenticated();
+  const { session } = await ensureUserAuthenticated();
 
   const audios = await prisma.audio.findMany({
     where: {
@@ -32,7 +32,7 @@ export async function getAudioById(input: z.infer<typeof audioActionSchema>) {
     select: {
       id: true,
       title: true,
-      url: true,
+      key: true,
     },
   });
 
@@ -52,7 +52,7 @@ export async function getAudioDownloadUrl(
 
   const getAudioCommand = new GetObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
-    Key: audio.url,
+    Key: audio.key,
   });
 
   const signedUrl = await getSignedUrl(cloudflareR2, getAudioCommand, {
@@ -67,13 +67,13 @@ export async function getAudioDownloadUrl(
 }
 
 export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
-  const session = await ensureUserAuthenticated();
+  const { session } = await ensureUserAuthenticated();
 
   const audio = await getAudioById({ id: input.id });
 
   const commandDelete = new DeleteObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
-    Key: audio.url,
+    Key: audio.key,
   });
   await cloudflareR2.send(commandDelete);
 
