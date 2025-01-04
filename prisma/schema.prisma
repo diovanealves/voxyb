@@ -60,9 +60,10 @@ model VerificationToken {
 }
 
 model Audio {
-  id    String @id @default(uuid())
-  title String
-  url   String
+  id               String @id @default(uuid())
+  title            String
+  key              String
+  paymentSessionId String @unique @map("payment_session_id")
 
   createdAt DateTime @default(now()) @map("created_at")
 
