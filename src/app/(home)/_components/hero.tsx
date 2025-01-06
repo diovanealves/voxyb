@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="about"
-      className="flex h-full flex-col justify-center text-center"
+      className="flex h-full flex-col justify-center px-2 text-center"
     >
       <TextGenerateEffect
         words="Transform Text into Natural Audio"

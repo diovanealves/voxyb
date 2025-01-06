@@ -41,7 +41,7 @@ export function Pricing() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-center">
-            <p className="mb-4 text-4xl font-bold">$ 15.00</p>
+            <p className="mb-4 text-4xl font-bold">$18.99</p>
             <p className="text-muted-foreground">per audio generation</p>
 
             <ul className="mt-6 space-y-3 text-left">

@@ -29,7 +29,7 @@ const faqs = [
   {
     title: "What file formats are supported for the generated audio?",
     description:
-      "We support common audio formats including MP3 and WAV. You can choose the format that best suits your needs when generating the audio.",
+      "We support audio generation exclusively in the MP3 format, ensuring compatibility and high-quality sound for your needs.",
   },
 ];
 

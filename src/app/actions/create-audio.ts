@@ -43,7 +43,7 @@ export async function createAudio(data: CreateAudioWithPayment) {
   }
 
   const buffer = Buffer.concat(chunks);
-  const fileName = `${data.paymentSessionId}-${crypto.randomUUID()}`;
+  const fileName = `${data.paymentSessionId}-${crypto.randomUUID()}.mp3`;
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
