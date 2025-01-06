@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loadStripe } from "@stripe/stripe-js";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -54,16 +53,14 @@ export function AudioForm() {
 
   async function onSubmit(data: z.infer<typeof createAudioSchema>) {
     try {
-      const checkout = await createCheckout(data);
-
-      const stripe = await loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
-      );
-
+      const payment = await createCheckout(data);
       form.reset();
-      await stripe?.redirectToCheckout({
-        sessionId: checkout.id,
-      });
+
+      if (!payment) {
+        throw new Error("Error creating payment link");
+      }
+
+      window.location.href = payment.url;
     } catch (error) {
       console.error(error);
 

@@ -13,7 +13,7 @@ interface CreateAudioWithPayment {
   paymentSessionId: string;
 }
 
-export async function CreateAudio(data: CreateAudioWithPayment) {
+export async function createAudio(data: CreateAudioWithPayment) {
   const { session } = await ensureUserAuthenticated();
 
   const duplicateAudio = await prisma.audio.findUnique({

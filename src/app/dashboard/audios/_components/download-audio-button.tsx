@@ -1,10 +1,10 @@
+import { getAudioDownloadUrl } from "@/app/actions/get-audio-download-url";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/hooks/use-toast";
 import { DownloadIcon } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
-import { getAudioDownloadUrl } from "../actions";
 import { audioActionSchema } from "../schema";
 
 export function DownloadAudioButton({ id }: z.infer<typeof audioActionSchema>) {

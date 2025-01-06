@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateAudio } from "@/app/actions/create-audio";
+import { createAudio } from "@/app/actions/create-audio";
 import { getPaymentStatus } from "@/app/actions/get-payment-status";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +33,7 @@ export default function Success() {
         const paymentStatus = await getPaymentStatus(sessionId);
 
         if (paymentStatus.status === "paid" && paymentStatus.data) {
-          await CreateAudio({
+          await createAudio({
             title: paymentStatus.data.title,
             text: paymentStatus.data.text,
             "voice-id": paymentStatus.data["voice-id"],

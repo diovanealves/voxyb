@@ -1,6 +1,7 @@
 import { audiosColumns } from "./_columns";
 import { DataTable } from "./_components/data-table";
-import { getUserAudio } from "./actions";
+
+import { getUserAudio } from "@/app/actions/get-user-audio";
 
 export default async function MyAudios() {
   const audios = await getUserAudio();

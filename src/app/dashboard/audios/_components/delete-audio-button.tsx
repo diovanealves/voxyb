@@ -1,12 +1,12 @@
 "use client";
 
+import { deleteAudio } from "@/app/actions/delete-audio";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/hooks/use-toast";
 import { TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
-import { deleteAudio } from "../actions";
 import { audioActionSchema } from "../schema";
 
 export function DeleteAudioButton({ id }: z.infer<typeof audioActionSchema>) {
