@@ -15,7 +15,7 @@ export const audioActionSchema = z.object({
     .nonempty(
       "User ID cannot be empty. Please make sure a valid User ID is provided.",
     )
-    .uuid(
+    .cuid(
       "The provided User ID is invalid. Please provide a valid UUID format.",
     ),
 });

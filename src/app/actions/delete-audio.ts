@@ -13,6 +13,8 @@ import { audioActionSchema } from "../dashboard/audios/schema";
 
 export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
   audioActionSchema.parse(input);
+
+  console.log(input.userId);
   const { session } = await ensureUserAuthenticated();
 
   const audio = await getAudioById({ id: input.id, userId: input.userId });
