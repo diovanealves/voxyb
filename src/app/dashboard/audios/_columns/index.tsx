@@ -33,8 +33,8 @@ export const audiosColumns: ColumnDef<Audio>[] = [
     cell: ({ row: { original: audio } }) => {
       return (
         <div className="space-x-1">
-          <DownloadAudioButton id={audio.id} />
-          <DeleteAudioButton id={audio.id} />
+          <DownloadAudioButton id={audio.id} userId={audio.userId} />
+          <DeleteAudioButton id={audio.id} userId={audio.userId} />
         </div>
       );
     },

@@ -9,10 +9,13 @@ import Link from "next/link";
 import { z } from "zod";
 import { audioActionSchema } from "../schema";
 
-export function DeleteAudioButton({ id }: z.infer<typeof audioActionSchema>) {
+export function DeleteAudioButton({
+  id,
+  userId,
+}: z.infer<typeof audioActionSchema>) {
   async function handleDelete() {
     try {
-      await deleteAudio({ id });
+      await deleteAudio({ id, userId });
       toast({
         variant: "success",
         description: "The audio was successfully deleted",

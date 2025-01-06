@@ -15,7 +15,7 @@ export async function deleteAudio(input: z.infer<typeof audioActionSchema>) {
   audioActionSchema.parse(input);
   const { session } = await ensureUserAuthenticated();
 
-  const audio = await getAudioById({ id: input.id });
+  const audio = await getAudioById({ id: input.id, userId: input.userId });
 
   const commandDelete = new DeleteObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,

@@ -13,9 +13,10 @@ import { audioActionSchema } from "../dashboard/audios/schema";
 export async function getAudioDownloadUrl(
   input: z.infer<typeof audioActionSchema>,
 ) {
+  audioActionSchema.parse(input);
   await ensureUserAuthenticated();
 
-  const audio = await getAudioById({ id: input.id });
+  const audio = await getAudioById({ id: input.id, userId: input.userId });
 
   const getAudioCommand = new GetObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,

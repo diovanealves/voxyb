@@ -7,10 +7,13 @@ import Link from "next/link";
 import { z } from "zod";
 import { audioActionSchema } from "../schema";
 
-export function DownloadAudioButton({ id }: z.infer<typeof audioActionSchema>) {
+export function DownloadAudioButton({
+  id,
+  userId,
+}: z.infer<typeof audioActionSchema>) {
   async function handleDownload() {
     try {
-      const getSignedAudioUrl = await getAudioDownloadUrl({ id });
+      const getSignedAudioUrl = await getAudioDownloadUrl({ id, userId });
       const fetchAudio = await fetch(getSignedAudioUrl.url);
 
       if (!fetchAudio) {
