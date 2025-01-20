@@ -47,7 +47,7 @@ export function AudioForm() {
 
     if (newText.length > 600) {
       e.preventDefault();
-      form.setValue("text", newText.slice(0, 600));
+      form.setValue("text", newText.slice(0, 700));
     }
   }
 
@@ -102,17 +102,17 @@ export function AudioForm() {
                 <p
                   className={cn(
                     "text-sm font-semibold",
-                    textToConvertLenght > 600 && "text-red-500",
+                    textToConvertLenght > 700 && "text-red-500",
                   )}
                 >
-                  {textToConvertLenght}/600
+                  {textToConvertLenght}/700
                 </p>
               </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Type the message you want the AI to convert into audio"
                   className="h-40 resize-none"
-                  disabled={textToConvertLenght === 600}
+                  disabled={textToConvertLenght === 700}
                   onPaste={handlePaste}
                   {...field}
                 />
