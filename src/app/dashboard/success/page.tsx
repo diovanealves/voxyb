@@ -49,6 +49,8 @@ export default function Success() {
 
         setLoading(false);
       } catch (error) {
+        console.error(error);
+
         toast({
           variant: "destructive",
           description:
