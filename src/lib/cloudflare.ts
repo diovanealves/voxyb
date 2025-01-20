@@ -7,4 +7,6 @@ export const cloudflareR2 = new S3Client({
     accessKeyId: process.env.CLOUDFLARE_ACCESS_KEY,
     secretAccessKey: process.env.CLOUDFLARE_SECRET_KEY,
   },
+  requestChecksumCalculation: "WHEN_REQUIRED",
+  responseChecksumValidation: "WHEN_REQUIRED",
 });
