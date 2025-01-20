@@ -38,6 +38,7 @@ export default function Success() {
             text: paymentStatus.data.text,
             "voice-id": paymentStatus.data["voice-id"],
             paymentSessionId: sessionId,
+            userId: paymentStatus.data.userId,
           });
         }
 
@@ -45,16 +46,14 @@ export default function Success() {
           variant: "success",
           description: "Audio has been created successfully.",
         });
-      } catch (error) {
-        console.log(error);
 
+        setLoading(false);
+      } catch (error) {
         toast({
           variant: "destructive",
           description:
             "An error occurred while creating the audio. Please contact support.",
         });
-      } finally {
-        setLoading(false);
       }
     }
 

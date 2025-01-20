@@ -4,8 +4,15 @@ import { z } from "zod";
 
 import { stripe } from "@/lib/stripe";
 import { createAudioSchema } from "../dashboard/(main)/schema";
+import { ensureUserAuthenticated } from "./ensure-user-authenticated";
 
 export async function createCheckout(data: z.infer<typeof createAudioSchema>) {
+  const { session } = await ensureUserAuthenticated();
+
+  if (!session.id) {
+    throw new Error("User not found");
+  }
+
   const paymentLink = await stripe.paymentLinks.create({
     payment_method_types: ["card"],
     line_items: [
@@ -24,6 +31,7 @@ export async function createCheckout(data: z.infer<typeof createAudioSchema>) {
       title: data.title,
       text: data.text,
       "voice-id": data["voice-id"],
+      userId: session.id,
     },
   });
 

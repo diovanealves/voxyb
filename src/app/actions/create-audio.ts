@@ -4,18 +4,16 @@ import { cloudflareR2 } from "@/lib/cloudflare";
 import { elevenLabsClient } from "@/lib/elevenlabs";
 import { prisma } from "@/services/database";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { ensureUserAuthenticated } from "./ensure-user-authenticated";
 
 interface CreateAudioWithPayment {
   title: string;
   text: string;
   "voice-id": string;
   paymentSessionId: string;
+  userId: string;
 }
 
 export async function createAudio(data: CreateAudioWithPayment) {
-  const { session } = await ensureUserAuthenticated();
-
   const duplicateAudio = await prisma.audio.findUnique({
     where: {
       paymentSessionId: data.paymentSessionId,
@@ -37,28 +35,26 @@ export async function createAudio(data: CreateAudioWithPayment) {
   });
 
   const chunks: Buffer[] = [];
-
   for await (const chunk of audioStream) {
     chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
   }
 
   const buffer = Buffer.concat(chunks);
-  const fileName = `${data.paymentSessionId}-${crypto.randomUUID()}.mp3`;
+  const filename = `${data.paymentSessionId}-${crypto.randomUUID()}.mp3`;
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET,
-    Key: fileName,
+    Key: filename,
     Body: buffer,
     ContentType: "audio/mpeg",
   });
-
   await cloudflareR2.send(putObjectCommand);
 
   await prisma.audio.create({
     data: {
       title: data.title,
-      key: fileName,
-      userId: session.id!,
+      key: filename,
+      userId: data.userId,
       paymentSessionId: data.paymentSessionId,
     },
   });
