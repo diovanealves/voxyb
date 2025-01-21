@@ -6,6 +6,7 @@ declare namespace NodeJS {
     ELEVENLABS_API_KEY: string;
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string;
     STRIPE_SECRET_KEY: string;
+    STRIPE_PAYMENTLINKS_PRICE_ID: string;
     NEXTAUTH_SECRET: string;
     HOST_URL: string;
     CLOUDFLARE_ENDPOINT: string;

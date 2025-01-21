@@ -17,7 +17,7 @@ export async function createCheckout(data: z.infer<typeof createAudioSchema>) {
     payment_method_types: ["card"],
     line_items: [
       {
-        price: "price_1QdaMbQGBKTXGYUfMTm4jEQy",
+        price: process.env.STRIPE_PAYMENTLINKS_PRICE_ID,
         quantity: 1,
       },
     ],
