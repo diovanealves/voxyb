@@ -9,7 +9,7 @@ import { SupportedLanguages } from "./_components/supported-languages";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <div className="container mx-auto">
         <div className="h-screen overflow-hidden">
           <Navbar />
@@ -22,6 +22,6 @@ export default function Home() {
       <Pricing />
       <Faq />
       <CTA />
-    </>
+    </div>
   );
 }

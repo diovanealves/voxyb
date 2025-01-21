@@ -1,61 +1,23 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import {
-  BriefcaseIcon,
-  GlobeIcon,
-  LockIcon,
-  MicIcon,
-  SmartphoneIcon,
-  ZapIcon,
-} from "lucide-react";
+import { useInView } from "react-intersection-observer";
 
-const benefits = [
-  {
-    icon: <MicIcon className="h-12 w-12" />,
-    title: "Natural Human Voices",
-    description:
-      "Our AI generates incredibly lifelike speech that's indistinguishable from human voices.",
-  },
-  {
-    icon: <ZapIcon className="h-12 w-12" />,
-    title: "Lightning Fast",
-    description:
-      "Convert text to speech in seconds with our powerful and efficient processing engine.",
-  },
-  {
-    icon: <SmartphoneIcon className="h-12 w-12" />,
-    title: "Cross-Platform",
-    description:
-      "Use our service on any device - smartphone, tablet, or computer, anytime and anywhere.",
-  },
-  {
-    icon: <GlobeIcon className="h-12 w-12" />,
-    title: "Multiple Languages",
-    description:
-      "Support for over 32 languages and accents, making your content globally accessible.",
-  },
-  {
-    icon: <LockIcon className="h-12 w-12" />,
-    title: "Secure & Private",
-    description:
-      "Your data is encrypted and protected. We prioritize your privacy and security.",
-  },
-  {
-    icon: <BriefcaseIcon className="h-12 w-12" />,
-    title: "Business Voiceovers",
-    description:
-      "Enhance your presentations and ads with professional AI voiceovers customized to your brand.",
-  },
-];
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { benefitsData } from "@/data/benefitsData";
 
 export function Benefits() {
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+  });
+
   return (
-    <section id="benefits" className="px-6 py-10">
+    <section id="benefits" className="px-6 py-10" ref={ref}>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={inView && { opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="mb-6 text-center text-3xl font-bold"
       >
@@ -63,12 +25,12 @@ export function Benefits() {
       </motion.h2>
 
       <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-        {benefits.map((benefit, index) => (
+        {benefitsData.map((benefit, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.15 }}
+            animate={inView && { opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
           >
             <Card className="h-72 rounded-xl shadow-lg transition-all hover:shadow-xl">
               <CardHeader>

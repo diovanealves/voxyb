@@ -1,13 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 import { Highlight } from "@/components/ui/hero-highlight";
-import { topLanguages } from "@/data/languagues";
+import { topLanguages } from "@/data/languaguesData";
 
 export function SupportedLanguages() {
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+  });
+
   return (
-    <section id="supported-languages" className="px-6 py-10">
+    <section id="supported-languages" className="px-6 py-10" ref={ref}>
       <h2 className="mb-12 text-center text-3xl font-bold">
         Supported Languages
       </h2>
@@ -19,7 +25,9 @@ export function SupportedLanguages() {
           </h3>
           <p className="text-lg font-medium">
             Our advanced{" "}
-            <Highlight>AI system is fluent in 32 different languages</Highlight>
+            <Highlight inView={inView}>
+              AI system is fluent in 32 different languages
+            </Highlight>
             , enabling content creation for global markets. It facilitates the
             creation of engaging ads, ensuring your message resonates with
             audiences worldwide.
@@ -32,8 +40,8 @@ export function SupportedLanguages() {
               key={index}
               className="m-1 text-4xl md:text-5xl"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              animate={inView && { opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
               {language.flag}
             </motion.div>

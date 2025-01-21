@@ -3,17 +3,11 @@
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { navbarLinkData } from "@/data/navbarLinkData";
 import { motion } from "framer-motion";
 import { MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-
-const navItems = [
-  { name: "Benefits", href: "#benefits" },
-  { name: "Use Cases", href: "#use-cases" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
-];
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +22,7 @@ export function Navbar() {
         <Logo />
 
         <nav className="hidden space-x-4 md:flex">
-          {navItems.map((item) => (
+          {navbarLinkData.map((item) => (
             <Link
               key={item.name}
               href={item.href}
@@ -80,7 +74,7 @@ export function Navbar() {
           exit={{ opacity: 0, y: -20 }}
         >
           <div className="w-full space-y-1 px-4 py-2">
-            {navItems.map((item) => (
+            {navbarLinkData.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}

@@ -34,9 +34,9 @@ export const HeroHighlight = ({
       )}
       onMouseMove={handleMouseMove}
     >
-      <div className="bg-dot-thick-neutral-300 dark:bg-dot-thick-neutral-800 pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 bg-dot-thick-neutral-300 dark:bg-dot-thick-neutral-800" />
       <motion.div
-        className="bg-dot-thick-indigo-500 dark:bg-dot-thick-indigo-500 pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 bg-dot-thick-indigo-500 group-hover:opacity-100 dark:bg-dot-thick-indigo-500"
         style={{
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
@@ -63,18 +63,22 @@ export const HeroHighlight = ({
 export const Highlight = ({
   children,
   className,
+  inView,
 }: {
   children: React.ReactNode;
   className?: string;
+  inView: boolean;
 }) => {
   return (
     <motion.span
       initial={{
         backgroundSize: "0% 100%",
       }}
-      animate={{
-        backgroundSize: "100% 100%",
-      }}
+      animate={
+        inView && {
+          backgroundSize: "100% 100%",
+        }
+      }
       transition={{
         duration: 2,
         ease: "linear",
