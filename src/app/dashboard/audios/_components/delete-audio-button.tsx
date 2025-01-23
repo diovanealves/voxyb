@@ -1,12 +1,13 @@
 "use client";
 
-import { deleteAudio } from "@/app/actions/delete-audio";
-import { Button } from "@/components/ui/button";
-import { ToastAction } from "@/components/ui/toast";
-import { toast } from "@/hooks/use-toast";
 import { TrashIcon } from "lucide-react";
-import Link from "next/link";
 import { z } from "zod";
+
+import { deleteAudio } from "@/app/actions/delete-audio";
+import { ErrorToast } from "@/components/error-toast";
+import { Button } from "@/components/ui/button";
+
+import { toast } from "@/hooks/use-toast";
 import { audioActionSchema } from "../schema";
 
 export function DeleteAudioButton({
@@ -22,25 +23,7 @@ export function DeleteAudioButton({
       });
     } catch (error) {
       if (error instanceof Error) {
-        if (
-          error.message ===
-          "You are not signed in. Please log in and try again."
-        ) {
-          toast({
-            variant: "destructive",
-            description: error.message,
-            action: (
-              <ToastAction altText="Click here" asChild>
-                <Link href="/login">Click here</Link>
-              </ToastAction>
-            ),
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            description: error.message,
-          });
-        }
+        ErrorToast({ message: error.message });
       }
     }
   }

@@ -1,10 +1,10 @@
-import { getAudioDownloadUrl } from "@/app/actions/get-audio-download-url";
-import { Button } from "@/components/ui/button";
-import { ToastAction } from "@/components/ui/toast";
-import { toast } from "@/hooks/use-toast";
 import { DownloadIcon } from "lucide-react";
-import Link from "next/link";
 import { z } from "zod";
+
+import { ErrorToast } from "@/components/error-toast";
+import { Button } from "@/components/ui/button";
+
+import { getAudioDownloadUrl } from "@/app/actions/get-audio-download-url";
 import { audioActionSchema } from "../schema";
 
 export function DownloadAudioButton({
@@ -17,10 +17,7 @@ export function DownloadAudioButton({
       const fetchAudio = await fetch(getSignedAudioUrl.url);
 
       if (!fetchAudio) {
-        toast({
-          variant: "destructive",
-          description: "Failed to download audio",
-        });
+        ErrorToast({ message: "Failed to download audio" });
       }
 
       const blob = await fetchAudio.blob();
@@ -33,25 +30,7 @@ export function DownloadAudioButton({
       URL.revokeObjectURL(bloblUrl);
     } catch (error) {
       if (error instanceof Error) {
-        if (
-          error.message ===
-          "You are not signed in. Please log in and try again."
-        ) {
-          toast({
-            variant: "destructive",
-            description: error.message,
-            action: (
-              <ToastAction altText="Click here" asChild>
-                <Link href="/login">Click here</Link>
-              </ToastAction>
-            ),
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            description: error.message,
-          });
-        }
+        ErrorToast({ message: error.message });
       }
     }
   }

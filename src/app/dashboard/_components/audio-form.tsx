@@ -25,7 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { createCheckout } from "@/app/actions/create-checkout";
-import { toast } from "@/hooks/use-toast";
+import { ErrorToast } from "@/components/error-toast";
 import { cn } from "@/lib/utils";
 import { createAudioSchema } from "../(main)/schema";
 
@@ -57,18 +57,15 @@ export function AudioForm() {
       form.reset();
 
       if (!payment) {
-        throw new Error("Error creating payment link");
+        ErrorToast({ message: "Error creating payment link" });
       }
 
       window.location.href = payment.url;
     } catch (error) {
-      console.error(error);
-
-      toast({
-        variant: "destructive",
-        description:
-          "There was an issue with processing your payment. Please try again. If the problem persists, contact support.",
-      });
+      console.log(error);
+      if (error instanceof Error) {
+        ErrorToast({ message: error.message });
+      }
     }
   }
 

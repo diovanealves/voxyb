@@ -14,7 +14,11 @@ export async function getAudioDownloadUrl(
   input: z.infer<typeof audioActionSchema>,
 ) {
   audioActionSchema.parse(input);
-  await ensureUserAuthenticated();
+
+  const { session } = await ensureUserAuthenticated();
+  if (!session.id) {
+    throw new Error("You are not signed in. Please log in and try again.");
+  }
 
   const audio = await getAudioById({ id: input.id, userId: input.userId });
 

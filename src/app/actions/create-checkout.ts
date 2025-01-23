@@ -10,7 +10,7 @@ export async function createCheckout(data: z.infer<typeof createAudioSchema>) {
   const { session } = await ensureUserAuthenticated();
 
   if (!session.id) {
-    throw new Error("User not found");
+    throw new Error("You are not signed in. Please log in and try again.");
   }
 
   const paymentLink = await stripe.paymentLinks.create({
@@ -34,6 +34,12 @@ export async function createCheckout(data: z.infer<typeof createAudioSchema>) {
       userId: session.id,
     },
   });
+
+  if (!paymentLink) {
+    throw new Error(
+      "There was an issue with processing your payment. Please try again. If the problem persists, contact support.",
+    );
+  }
 
   return {
     id: paymentLink.id,
