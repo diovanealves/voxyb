@@ -9,6 +9,7 @@ export async function getUserAudio() {
   const audios = await prisma.audio.findMany({
     where: {
       userId: session.id,
+      deletedAt: null,
     },
     orderBy: {
       createdAt: "desc",
