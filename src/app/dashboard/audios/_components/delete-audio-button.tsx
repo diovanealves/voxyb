@@ -6,6 +6,16 @@ import { z } from "zod";
 import { deleteAudio } from "@/app/actions/delete-audio";
 import { ErrorToast } from "@/components/error-toast";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { toast } from "@/hooks/use-toast";
 import { audioActionSchema } from "../schema";
@@ -29,13 +39,35 @@ export function DeleteAudioButton({
   }
 
   return (
-    <Button
-      size="icon"
-      variant="ghost"
-      className="text-muted-foreground"
-      onClick={handleDelete}
-    >
-      <TrashIcon className="h-3 w-3" />
-    </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button size="icon" variant="ghost" className="text-muted-foreground">
+          <TrashIcon className="h-3 w-3" />
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader className="space-y-3">
+          <DialogTitle>Are you sure you want to delete this audio?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. The audio file will be permanently
+            removed from your library.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="destructive" onClick={handleDelete}>
+              Delete
+            </Button>
+          </DialogClose>
+
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Close
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
