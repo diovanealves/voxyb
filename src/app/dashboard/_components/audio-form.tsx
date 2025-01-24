@@ -27,6 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createCheckout } from "@/app/actions/create-checkout";
 import { ErrorToast } from "@/components/error-toast";
 import { cn } from "@/lib/utils";
+import { LoaderIcon } from "lucide-react";
 import { createAudioSchema } from "../(main)/schema";
 
 export function AudioForm() {
@@ -147,8 +148,19 @@ export function AudioForm() {
           )}
         />
 
-        <Button type="submit" className="mb-3 mt-5 w-full">
-          Generate Audio
+        <Button
+          type="submit"
+          className="mb-3 mt-5 w-full"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? (
+            <>
+              <LoaderIcon className="animate-spin" />
+              Generating payment link...
+            </>
+          ) : (
+            "Create audio"
+          )}
         </Button>
       </form>
     </Form>
