@@ -69,7 +69,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                   </Link>
                 </SidebarMenuButton>
                 <SidebarMenuButton asChild>
-                  <Link href="/">
+                  <Link href="/dashboard/help">
                     <HelpCircleIcon className="mr-2 h-4 w-4" />
                     <span>Help</span>
                   </Link>
