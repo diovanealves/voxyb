@@ -3,7 +3,7 @@ import { TipsCard } from "../_components/tips-card";
 
 export default function Page() {
   return (
-    <div className="mt-8 flex h-full flex-col items-center justify-center md:mt-0">
+    <div className="flex h-full flex-col items-center justify-center py-10">
       <AudioCard />
       <TipsCard />
     </div>

@@ -81,7 +81,7 @@ export function AudioForm() {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter a descriptive title for your audio"
+                  placeholder="Choose a title to easily find this audio later"
                   {...field}
                 />
               </FormControl>

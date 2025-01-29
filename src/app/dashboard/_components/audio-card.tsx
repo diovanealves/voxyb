@@ -1,12 +1,21 @@
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { AudioForm } from "./audio-form";
 
 export function AudioCard() {
   return (
     <Card className="w-11/12">
-      <CardTitle className="my-2 mt-5 text-center text-xl font-bold">
-        Create Your Audio
-      </CardTitle>
+      <CardHeader>
+        <CardTitle className="text-2xl">Create Your Audio</CardTitle>
+        <CardDescription>
+          Convert your text into natural-sounding speech with AI voices
+        </CardDescription>
+      </CardHeader>
       <CardContent>
         <AudioForm />
       </CardContent>
