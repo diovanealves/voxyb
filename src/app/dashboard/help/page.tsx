@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -9,7 +7,11 @@ import {
 } from "@/components/ui/card";
 import { HelpForm } from "./_components/help-form";
 
-export default function Help() {
+import { ensureUserAuthenticated } from "@/app/actions/ensure-user-authenticated";
+
+export default async function Help() {
+  const { session } = await ensureUserAuthenticated();
+
   return (
     <div className="mx-auto flex h-full w-11/12 flex-col justify-center">
       <Card>
@@ -22,7 +24,7 @@ export default function Help() {
         </CardHeader>
 
         <CardContent>
-          <HelpForm />
+          <HelpForm email={session.email ?? ""} />
         </CardContent>
       </Card>
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -25,13 +27,20 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { sendEmailSchema } from "../schema";
 
-export function HelpForm() {
+export function HelpForm({ email }: { email: string }) {
   const form = useForm<z.infer<typeof sendEmailSchema>>({
     resolver: zodResolver(sendEmailSchema),
+    defaultValues: {
+      name: "",
+      email: email ?? "",
+      feedbackType: undefined,
+      title: "",
+      description: "",
+    },
   });
 
   async function handleSubmit(data: z.infer<typeof sendEmailSchema>) {
-    console.log(data);
+    
   }
 
   return (
@@ -58,7 +67,11 @@ export function HelpForm() {
             <FormItem className="space-y-1">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Your email address" {...field} />
+                <Input
+                  placeholder="Your email address"
+                  disabled={!!email}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
