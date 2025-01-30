@@ -13,7 +13,7 @@ export default async function Help() {
   const { session } = await ensureUserAuthenticated();
 
   return (
-    <div className="mx-auto flex h-full w-11/12 flex-col justify-center">
+    <div className="mx-auto flex h-full w-11/12 flex-col justify-center py-12">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Help Us Improve</CardTitle>
