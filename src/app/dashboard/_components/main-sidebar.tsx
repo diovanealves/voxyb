@@ -12,6 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   GlobeIcon,
@@ -28,7 +29,11 @@ type MainSidebarProps = {
 };
 
 export function MainSidebar({ user }: MainSidebarProps) {
+  const { setOpenMobile } = useSidebar();
+
   if (!user) return null;
+
+  const handleSidebarClose = () => setOpenMobile(false);
 
   return (
     <Sidebar>
@@ -40,13 +45,13 @@ export function MainSidebar({ user }: MainSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild onClick={handleSidebarClose}>
                   <Link href="/dashboard">
                     <HomeIcon className="mr-2 h-4 w-4" />
                     <span>Home</span>
                   </Link>
                 </SidebarMenuButton>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild onClick={handleSidebarClose}>
                   <Link href="/dashboard/audios">
                     <HeadphonesIcon className="mr-2 h-4 w-4" />
                     <span> Generated Audios</span>
@@ -62,13 +67,13 @@ export function MainSidebar({ user }: MainSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild onClick={handleSidebarClose}>
                   <Link href="/">
                     <GlobeIcon className="mr-2 h-4 w-4" />
                     <span>Website</span>
                   </Link>
                 </SidebarMenuButton>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild onClick={handleSidebarClose}>
                   <Link href="/dashboard/help">
                     <HelpCircleIcon className="mr-2 h-4 w-4" />
                     <span>Help</span>
