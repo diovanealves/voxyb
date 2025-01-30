@@ -18,6 +18,13 @@ export async function getUserAudio() {
     orderBy: {
       createdAt: "desc",
     },
+    select: {
+      id: true,
+      title: true,
+      key: true,
+      createdAt: true,
+      userId: true,
+    },
   });
 
   return audios;
