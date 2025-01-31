@@ -27,7 +27,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { createCheckout } from "@/app/actions/create-checkout";
 import { ErrorToast } from "@/components/error-toast";
 import { cn } from "@/lib/utils";
+import { useTour } from "@reactour/tour";
 import { LoaderIcon } from "lucide-react";
+import { useEffect } from "react";
 import { createAudioSchema } from "../(main)/schema";
 
 export function AudioForm() {
@@ -38,6 +40,15 @@ export function AudioForm() {
       text: "",
       "voice-id": "",
     },
+  });
+  const { setIsOpen } = useTour();
+
+  useEffect(() => {
+    const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
+
+    if (!hasSeenTutorial) {
+      setIsOpen(true);
+    }
   });
 
   const textToConvertLenght = form.watch("text").length;
@@ -132,7 +143,7 @@ export function AudioForm() {
                 value={field.value}
               >
                 <FormControl aria-label="Select a voice">
-                  <SelectTrigger>
+                  <SelectTrigger {...field}>
                     <SelectValue placeholder="Select a voice" />
                   </SelectTrigger>
                 </FormControl>
