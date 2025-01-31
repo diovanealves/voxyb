@@ -40,7 +40,7 @@ export function HelpForm({ email }: { email: string }) {
   });
 
   async function handleSubmit(data: z.infer<typeof sendEmailSchema>) {
-    
+    console.log(data);
   }
 
   return (
