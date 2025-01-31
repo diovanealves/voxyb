@@ -1,6 +1,6 @@
 export const navbarLinkData = [
   { name: "Benefits", href: "#benefits" },
-  { name: "Use Cases", href: "#use-cases" },
+  { name: "Supported Languages", href: "#supported-languages" },
   { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
 ];
