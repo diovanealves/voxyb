@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+import { sendEmail } from "@/app/actions/send-email";
+import { toast } from "@/hooks/use-toast";
 import { sendEmailSchema } from "../schema";
 
 export function HelpForm({ email }: { email: string }) {
@@ -40,7 +42,21 @@ export function HelpForm({ email }: { email: string }) {
   });
 
   async function handleSubmit(data: z.infer<typeof sendEmailSchema>) {
-    console.log(data);
+    try {
+      await sendEmail(data);
+
+      form.reset();
+      toast({
+        variant: "success",
+        description: "Email sent successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        description: "Failed to send email",
+      });
+    }
   }
 
   return (
