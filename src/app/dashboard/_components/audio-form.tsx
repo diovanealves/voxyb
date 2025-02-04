@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -51,15 +51,36 @@ export function AudioForm() {
     }
   });
 
-  const textToConvertLenght = form.watch("text").length;
+  const textToConvertLenght = form.watch("text").replace(/\s/g, "").length;
 
   function handlePaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
+    e.preventDefault();
     const pastedText = e.clipboardData.getData("text");
-    const newText = form.watch("text") + pastedText;
+    const currentText = form.watch("text");
+    const newText = currentText + pastedText;
+    const textWithoutSpaces = newText.replace(/\s/g, "");
 
-    if (newText.length > 600) {
+    if (textWithoutSpaces.length > 700) {
+      let truncatedText = newText;
+      while (truncatedText.replace(/\s/g, "").length > 700) {
+        truncatedText = truncatedText.slice(0, -1);
+      }
+      form.setValue("text", truncatedText);
+    } else {
+      form.setValue("text", newText);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    const currentText = form.watch("text");
+    const textWithoutSpaces = currentText.replace(/\s/g, "");
+
+    if (
+      textWithoutSpaces.length >= 700 &&
+      e.key !== "Backspace" &&
+      e.key !== "Delete"
+    ) {
       e.preventDefault();
-      form.setValue("text", newText.slice(0, 700));
     }
   }
 
@@ -111,7 +132,7 @@ export function AudioForm() {
                 <p
                   className={cn(
                     "text-sm font-semibold",
-                    textToConvertLenght > 700 && "text-red-500",
+                    textToConvertLenght >= 700 && "text-red-500",
                   )}
                 >
                   {textToConvertLenght}/700
@@ -120,12 +141,16 @@ export function AudioForm() {
               <FormControl>
                 <Textarea
                   placeholder="Type the message you want the AI to convert into audio"
-                  className="h-40 resize-none"
-                  disabled={textToConvertLenght === 700}
+                  className={cn(
+                    "h-40 resize-none",
+                    textToConvertLenght >= 700 && "border-red-500",
+                  )}
                   onPaste={handlePaste}
+                  onKeyDown={handleKeyDown}
                   {...field}
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}

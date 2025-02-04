@@ -13,7 +13,9 @@ export const createAudioSchema = z.object({
     })
     .nonempty("Please provide the text you want the AI to convert into audio")
     .min(10, { message: "Text must be at least 10 characters long" })
-    .max(700, { message: "Text must not exceed 700 characters" }),
+    .refine((value) => value.replace(/\s/g, "").length <= 700, {
+      message: "Text must not exceed 700 characters",
+    }),
   "voice-id": z
     .string({ required_error: "Please select a voice for your audio" })
     .nonempty("Please select a voice for your audio"),
