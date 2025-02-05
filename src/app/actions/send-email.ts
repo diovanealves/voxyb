@@ -12,10 +12,10 @@ export async function sendEmail(formData: z.infer<typeof sendEmailSchema>) {
   };
 
   await emailjs.send(
-    "service_shlljsp",
-    "template_dne037e",
+    process.env.EMAILJS_SERVICE_ID,
+    process.env.EMAILJS_TEMPLATE_ID,
     templateParams,
-    "eCQAmLCHM0UKWC0ju",
+    process.env.EMAILJS_PUBLIC_KEY,
   );
 
   return { data: "email send successfully" };

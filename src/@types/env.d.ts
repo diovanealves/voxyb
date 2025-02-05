@@ -14,5 +14,10 @@ declare namespace NodeJS {
     CLOUDFLARE_SECRET_KEY: string;
     CLOUDFLARE_ACCOUNT_ID: string;
     CLOUDFLARE_BUCKET: string;
+    EMAILJS_SERVICE_ID: string;
+    EMAILJS_TEMPLATE_ID: string;
+    EMAILJS_PUBLIC_KEY: string;
+    NEXT_PUBLIC_TOTAL_USERS: number;
+    NEXT_PUBLIC_AUDIOS_GENERATED: number;
   }
 }

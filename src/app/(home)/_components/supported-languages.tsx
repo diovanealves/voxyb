@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Flag from "react-world-flags";
 
 import { Highlight } from "@/components/ui/hero-highlight";
-import { topLanguages } from "@/data/languaguesData";
+import { languagesData } from "@/data/languaguesData";
 
 export function SupportedLanguages() {
   const { ref, inView } = useInView({
@@ -34,8 +35,8 @@ export function SupportedLanguages() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center">
-          {topLanguages.map((language, index) => (
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {languagesData.slice(0, 12).map((language, index) => (
             <motion.div
               key={index}
               className="m-1 text-4xl md:text-5xl"
@@ -43,7 +44,12 @@ export function SupportedLanguages() {
               animate={inView && { opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              {language.flag}
+              <div>
+                <Flag
+                  code={language.code}
+                  className="aspect-square h-14 w-24 object-cover"
+                />
+              </div>
             </motion.div>
           ))}
         </div>

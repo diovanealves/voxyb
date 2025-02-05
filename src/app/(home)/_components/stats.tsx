@@ -2,9 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HeadphonesIcon, UsersIcon } from "lucide-react";
 
 export function Stats() {
-  const totalUsersFormatted = new Intl.NumberFormat("en-US").format(10);
+  const totalUsersFormatted = new Intl.NumberFormat("en-US").format(
+    process.env.NEXT_PUBLIC_TOTAL_USERS,
+  );
   const totalAudiosGeneratedFormatted = new Intl.NumberFormat("en-US").format(
-    1500,
+    process.env.NEXT_PUBLIC_AUDIOS_GENERATED,
   );
 
   return (
