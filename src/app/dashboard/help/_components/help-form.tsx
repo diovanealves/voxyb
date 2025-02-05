@@ -103,7 +103,7 @@ export function HelpForm({ email }: { email: string }) {
               <Select
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                value={field.value}
+                value={field.value || ""}
               >
                 <FormControl aria-label="Select a feedback type">
                   <SelectTrigger>
