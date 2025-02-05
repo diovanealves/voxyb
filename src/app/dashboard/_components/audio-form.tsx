@@ -26,11 +26,13 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { createCheckout } from "@/app/actions/create-checkout";
 import { ErrorToast } from "@/components/error-toast";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useTour } from "@reactour/tour";
 import { LoaderIcon } from "lucide-react";
 import { useEffect } from "react";
 import { createAudioSchema } from "../(main)/schema";
+import { SheetSupportedLanguages } from "./sheet-supported-languages";
 
 export function AudioForm() {
   const form = useForm<z.infer<typeof createAudioSchema>>({
@@ -126,33 +128,36 @@ export function AudioForm() {
           control={form.control}
           name="text"
           render={({ field }) => (
-            <FormItem className="mt-3 space-y-1">
-              <FormLabel className="flex items-center justify-between">
-                Text to convert
-                <p
-                  className={cn(
-                    "text-sm font-semibold",
-                    textToConvertLenght >= 700 && "text-red-500",
-                  )}
-                >
-                  {textToConvertLenght}/700
-                </p>
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Type the message you want the AI to convert into audio"
-                  className={cn(
-                    "h-40 resize-none",
-                    textToConvertLenght >= 700 && "border-red-500",
-                  )}
-                  onPaste={handlePaste}
-                  onKeyDown={handleKeyDown}
-                  {...field}
-                />
-              </FormControl>
+            <>
+              <FormItem className="mt-3 space-y-1">
+                <FormLabel className="flex items-center justify-between">
+                  Text to convert
+                  <p
+                    className={cn(
+                      "text-sm font-semibold",
+                      textToConvertLenght >= 700 && "text-red-500",
+                    )}
+                  >
+                    {textToConvertLenght}/700
+                  </p>
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Type the message you want the AI to convert into audio"
+                    className={cn(
+                      "h-40 resize-none",
+                      textToConvertLenght >= 700 && "border-red-500",
+                    )}
+                    onPaste={handlePaste}
+                    onKeyDown={handleKeyDown}
+                    {...field}
+                  />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
+                <FormMessage />
+              </FormItem>
+              <SheetSupportedLanguages />
+            </>
           )}
         />
 
@@ -180,6 +185,27 @@ export function AudioForm() {
                 </SelectContent>
               </Select>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="languagesConfirmed"
+          render={({ field }) => (
+            <FormItem className="mt-3 space-y-1">
+              <div className="flex items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="rounded-md"
+                  />
+                </FormControl>
+                <FormLabel className="mt-0">
+                  I have seen the supported languages
+                </FormLabel>
+              </div>
             </FormItem>
           )}
         />

@@ -19,4 +19,7 @@ export const createAudioSchema = z.object({
   "voice-id": z
     .string({ required_error: "Please select a voice for your audio" })
     .nonempty("Please select a voice for your audio"),
+  languagesConfirmed: z.boolean().refine((value) => value === true, {
+    message: "You must confirm that you have seen the supported languages",
+  }),
 });
