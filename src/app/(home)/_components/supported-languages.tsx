@@ -47,6 +47,7 @@ export function SupportedLanguages() {
               <div>
                 <Flag
                   code={language.code}
+                  aria-label={`Flag of ${language.name}`}
                   className="aspect-square h-14 w-24 object-cover"
                 />
               </div>

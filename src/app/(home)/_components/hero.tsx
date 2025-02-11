@@ -15,8 +15,7 @@ export function Hero() {
     >
       <TextGenerateEffect
         words="Transform Text into Natural Audio"
-        className="tracking-tighte text-4xl font-black md:text-5xl"
-        duration={0.6}
+        className="text-4xl font-black md:text-5xl"
       />
 
       <motion.p

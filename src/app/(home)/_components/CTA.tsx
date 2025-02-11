@@ -16,7 +16,7 @@ export function CTA() {
       </p>
 
       <div>
-        <Button variant="outline" className="px-8 py-5">
+        <Button variant="outline" className="px-8 py-5" asChild>
           <Link
             href="/login"
             className="flex items-center rounded-lg text-lg font-semibold transition-all hover:scale-105"
