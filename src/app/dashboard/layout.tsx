@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PropsWithChildren } from "react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -16,8 +15,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       <main className="w-full">
         <SidebarTrigger className="absolute ml-1 mt-2" />
         {children}
-        <SpeedInsights />
-      </main> 
+      </main>
       <Toaster />
     </SidebarProvider>
   );
