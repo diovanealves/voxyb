@@ -4,6 +4,7 @@ import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { navbarLinkData } from "@/data/navbarLinkData";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
@@ -13,11 +14,7 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
+    <header>
       <div className="sticky top-0 z-10 flex w-full items-center justify-between px-6 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Logo />
 
@@ -49,19 +46,13 @@ export function Navbar() {
             aria-label="Toggle Menu"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
+            className={cn("transition-transform, duration-300 ease-in-out")}
           >
-            <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: isMenuOpen ? 180 : 0 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              aria-hidden={!isMenuOpen}
-            >
-              {isMenuOpen ? (
-                <XIcon className="h-6 w-6" />
-              ) : (
-                <MenuIcon className="h-6 w-6" />
-              )}
-            </motion.div>
+            {isMenuOpen ? (
+              <XIcon className="w-6, h-6 rotate-180 transform" />
+            ) : (
+              <MenuIcon className="w-6, h-6 rotate-0 transform" />
+            )}
           </Button>
         </div>
       </div>
@@ -91,6 +82,6 @@ export function Navbar() {
           </div>
         </motion.div>
       )}
-    </motion.header>
+    </header>
   );
 }

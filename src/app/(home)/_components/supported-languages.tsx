@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import Flag from "react-world-flags";
 
 import { Highlight } from "@/components/ui/hero-highlight";
-import { languagesData } from "@/data/languaguesData";
+import { languagesData } from "@/data/languagesData";
 
 export function SupportedLanguages() {
   const { ref, inView } = useInView({

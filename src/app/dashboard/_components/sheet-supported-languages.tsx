@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { languagesData } from "@/data/languaguesData";
+import { languagesData } from "@/data/languagesData";
 import { LanguagesIcon } from "lucide-react";
 
 export function SheetSupportedLanguages() {

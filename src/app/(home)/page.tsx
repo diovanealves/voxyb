@@ -1,3 +1,4 @@
+import { getStats } from "@/services/stats-service";
 import { Benefits } from "./_components/benefits";
 import { CTA } from "./_components/CTA";
 import { Faq } from "./_components/faq";
@@ -7,17 +8,19 @@ import { Pricing } from "./_components/pricing";
 import { Stats } from "./_components/stats";
 import { SupportedLanguages } from "./_components/supported-languages";
 
-export default function Home() {
+export default async function Home() {
+  const stats = await getStats();
+
   return (
     <div>
       <div className="container mx-auto">
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen">
           <Navbar />
           <Hero />
         </div>
         <Benefits />
         <SupportedLanguages />
-        <Stats />
+        <Stats {...stats} />
       </div>
       <Pricing />
       <Faq />

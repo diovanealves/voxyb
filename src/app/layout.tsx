@@ -14,6 +14,8 @@ const interFont = Inter({
   display: "swap",
 });
 
+export const dynamic = "force-static";
+
 export default function RootLayout({
   children,
 }: Readonly<{
