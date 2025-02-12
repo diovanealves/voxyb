@@ -1,4 +1,3 @@
-import { getStats } from "@/services/stats-service";
 import { Benefits } from "./_components/benefits";
 import { CTA } from "./_components/CTA";
 import { Faq } from "./_components/faq";
@@ -9,8 +8,6 @@ import { Stats } from "./_components/stats";
 import { SupportedLanguages } from "./_components/supported-languages";
 
 export default async function Home() {
-  const stats = await getStats();
-
   return (
     <div>
       <div className="container mx-auto">
@@ -20,7 +17,7 @@ export default async function Home() {
         </div>
         <Benefits />
         <SupportedLanguages />
-        <Stats {...stats} />
+        <Stats />
       </div>
       <Pricing />
       <Faq />

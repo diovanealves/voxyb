@@ -1,15 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HeadphonesIcon, UsersIcon } from "lucide-react";
 
-export interface StatsProps {
-  totalUsers: number;
-  totalAudiosGenerated: number;
-}
-
-export function Stats({ totalUsers, totalAudiosGenerated }: StatsProps) {
-  const totalUsersFormatted = new Intl.NumberFormat("en-US").format(totalUsers);
+export function Stats() {
+  const totalUsersFormatted = new Intl.NumberFormat("en-US").format(
+    process.env.NEXT_PUBLIC_TOTAL_USERS,
+  );
   const totalAudiosGeneratedFormatted = new Intl.NumberFormat("en-US").format(
-    totalAudiosGenerated,
+    process.env.NEXT_PUBLIC_TOTAL_AUDIOS_GENERATED,
   );
 
   return (
