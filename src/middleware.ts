@@ -12,8 +12,10 @@ export function middleware(request: NextRequest) {
   if (pathname.includes("/dashboard") && !token) {
     return NextResponse.redirect(new URL(getUrl("/login")));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
