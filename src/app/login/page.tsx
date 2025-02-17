@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { LoginForm } from "./_components/login-form";
 
 export default function Page() {
@@ -15,14 +14,7 @@ export default function Page() {
         <LoginForm />
       </div>
 
-      <div className="relative h-full w-full">
-        <Image
-          src="/login.png"
-          alt="Tela de Login"
-          className="object-cover"
-          fill
-        />
-      </div>
+      <div className="flex-1 bg-gradient-to-br from-blue-900 to-purple-900" />
     </div>
   );
 }
