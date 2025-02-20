@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,6 +31,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Script
+            async
+            src="https://analytics.voxyb.com/tracker.js"
+            data-ackee-server="https://analytics.voxyb.com"
+            data-ackee-domain-id="7b8ceb0f-9e1f-486d-bb5e-a8e7469ea0c6"
+          />
         </ThemeProvider>
       </body>
     </html>
