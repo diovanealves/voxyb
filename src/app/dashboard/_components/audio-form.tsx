@@ -1,12 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import type { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -24,14 +22,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-import { createCheckout } from "@/app/actions/create-checkout";
-import { ErrorToast } from "@/components/error-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useTour } from "@reactour/tour";
-import { LoaderIcon } from "lucide-react";
 import { useEffect } from "react";
 import { createAudioSchema } from "../(main)/schema";
+import { AudioConfirmationDialog } from "./audio-confirmation-dialog";
 import { SheetSupportedLanguages } from "./sheet-supported-languages";
 
 export function AudioForm() {
@@ -86,27 +82,9 @@ export function AudioForm() {
     }
   }
 
-  async function onSubmit(data: z.infer<typeof createAudioSchema>) {
-    try {
-      const payment = await createCheckout(data);
-      form.reset();
-
-      if (!payment) {
-        ErrorToast({ message: "Error creating payment link" });
-      }
-
-      window.location.href = payment.url;
-    } catch (error) {
-      console.log(error);
-      if (error instanceof Error) {
-        ErrorToast({ message: error.message });
-      }
-    }
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+    <FormProvider {...form}>
+      <form>
         <FormField
           control={form.control}
           name="title"
@@ -210,21 +188,8 @@ export function AudioForm() {
           )}
         />
 
-        <Button
-          type="submit"
-          className="mb-3 mt-5 w-full"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? (
-            <>
-              <LoaderIcon className="animate-spin" />
-              Generating payment link...
-            </>
-          ) : (
-            "Create audio"
-          )}
-        </Button>
+        <AudioConfirmationDialog />
       </form>
-    </Form>
+    </FormProvider>
   );
 }
