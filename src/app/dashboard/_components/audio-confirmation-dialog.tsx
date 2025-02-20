@@ -46,7 +46,6 @@ export function AudioConfirmationDialog() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          type="submit"
           className="mb-3 mt-5 w-full"
           disabled={!formContext.formState.isValid}
         >
