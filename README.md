@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">VoxyB</h1>
 
-## Getting Started
+<p align="center">Transforme seus textos em áudio de alta qualidade, pronto para campanhas publicitárias e conteúdo de marketing. Simples, rápido e com vozes profissionais que capturam a atenção do público.</p>
 
-First, run the development server:
+![](./assets/preview.png)
+
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-licença">Licença</a>
+</p>
+
+<p align="center">
+  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=49AA26&labelColor=000000">
+</p>
+
+## 🚀 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+### Front-End
+
+- NextJS
+- NextAuth
+- TailwindCSS
+- Cloudflare
+- Stripe
+- Elevenlabs
+- React-Hook-Form
+- Zood
+
+## 🚀 Etapas para rodar o projeto
+
+Para iniciar o projeto, siga estas etapas:
+
+> Clone o repositório do projeto:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/diovanealves/voxyb
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Agora na pasta web executar os seguintes comando.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# A rota padrão da aplicação sera localhost:3000
+```
 
-## Learn More
+<h2 align="center">Autor</h2>
+<table>
+  <tr>
+    <td>
+        <img src="https://avatars.githubusercontent.com/u/87160050?v=4" width="100px;" alt="Foto do Diovane Alves no GitHub"/>
+            <a href="https://github.com/diovanealves" style="color:#4f46e5" align="center">
+                <p>Github</p>
+            </a>
+            <a href="https://www.linkedin.com/in/diovane-alves-de-oliveira-5320a0217/" style="color:#4f46e5" align="center">
+                <p>Linkedin</p>
+            </a>
+            <a href="https://twitter.com/deluxyfps" style="color:#4f46e5" align="center">
+                <p>Twitter</p>
+            </a>
+    </td>
+  </tr>
+</table>
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 Licença
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Esse projeto está sob a licença MIT.
